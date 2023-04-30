@@ -40,40 +40,42 @@
 
 
 <div class="waiting_on" style="background-color:lightgoldenrodyellow">
+  
   <h2>Waiting on</h2>
- <ul>
- <%@list_of_deliveries.each do |delivery|%>
- <%if delivery.status == "waiting_on"%>
- <li><div><%=delivery.description%></div>
-  <%expected_date = delivery.arrive_on%>
-  <%#days_until = (expected_date - Date.today).to_i%>
- <%if expected_date < 3.days.ago%>
- <div style="color:red">Supposed to arrive on <%=delivery.arrive_on.to_s%></div>
- <%else%>
- <div style="color:black">Supposed to arrive on <%=delivery.arrive_on.to_s%></div>
-  <%end%>
- <%if delivery.details != nil%>
-<div><%=delivery.details%></div>
- <%end%>
- <form action="/modify_delivery/<%=delivery.id%>" method="post">
-          <input type="hidden" name="query_status" value="received">
-          <button>Mark as received</button>
-        </form>
- </li>
- <%end%>
- <%end%>
- </ul>
+  <ul>
+    <%@list_of_deliveries.each do |delivery|%>
+      <%if delivery.status == "waiting_on"%>
+        <li>
+          <div><%=delivery.description%></div>
+          <%expected_date = delivery.arrive_on%>
+          <%#days_until = (expected_date - Date.today).to_i%>
+          <%if expected_date < 3.days.ago%>
+            <div style="color:red">Supposed to arrive on <%=delivery.arrive_on.to_s%></div>
+          <%else%>
+            <div style="color:black">Supposed to arrive on <%=delivery.arrive_on.to_s%></div>
+          <%end%>
+          <%if delivery.details != nil%>
+            <div><%=delivery.details%></div>
+          <%end%>
+          <form action="/modify_delivery/<%=delivery.id%>" method="post">
+            <input type="hidden" name="query_status" value="received">
+            <button>Mark as received</button>
+          </form>
+         </li>
+      <%end%>
+    <%end%>
+  </ul>
 </div>
 
 <div class="received" style="background-color:lightgreen">
   <h2>Received</h2>
   <ul>
- <%@list_of_deliveries.each do |delivery|%>
-  <%if delivery.status == "received"%>
- <li><div><%=delivery.description%></div>
- <small>Updated <%=time_ago_in_words(delivery.updated_at)%> ago <a href="/delete_delivery/<%=delivery.id%>">Delete</a></small>
- </li>
- <%end%>
-  <%end%>
- </ul>
+    <%@list_of_deliveries.each do |delivery|%>
+      <%if delivery.status == "received"%>
+        <li><div><%=delivery.description%></div>
+        <small>Updated <%=time_ago_in_words(delivery.updated_at)%> ago <a href="/delete_delivery/<%=delivery.id%>">Delete</a></small>
+        </li>
+      <%end%>
+    <%end%>
+  </ul>
 </div>
